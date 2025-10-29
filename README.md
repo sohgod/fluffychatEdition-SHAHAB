@@ -2,7 +2,7 @@
 
 <H1>This is a fluffychat(Krille-chan) Edition App called Shahab-chat </H1>
 <h3>This app was modified by Soheil in October 2025.</h3>
-<h4>changes :<br>.changed logo<br>.changed splash-screen<br>.changed about dialog<br>.changed login banner<br></h4>
+<h4>changes :<br>.changed logo<br>.changed splash-screen<br>.changed about dialog<br>.changed login banner<br>.changed favicon.png,logo.png,banner.png+transparent info-logo.png and logo.svg in assets folder<br>.added a check-box in homeserver-picker.dart and homeserver-picker-view.dart to make singin with: input read-only<br>.changed icon using flutter_launcher_icons<br>.changed packagename using change_app_package_name <br>changed app name<br></h4>
 
 
 [FluffyChat](https://fluffychat.im) is an open source, nonprofit and cute [[matrix](https://matrix.org)] client written in [Flutter](https://flutter.dev). The goal of the app is to create an easy to use instant messenger which is open source and accessible for everyone.
