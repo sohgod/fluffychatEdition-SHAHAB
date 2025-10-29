@@ -93,7 +93,7 @@ abstract class PlatformInfos {
         filterQuality: FilterQuality.medium,
       ),
       // THIS IS YOUR CUSTOMIZATION, which remains correct
-      applicationName: 'This is a modified (10/26/2025) version of FluffyChat (licensed under AGPLv3) by soheil and Shahab {Shahab-chat}',
+      applicationName: 'This is a modified (10/26/2025) version of FluffyChat (licensed under AGPLv3, Krille-chan) by soheil and Shahab {Shahab-chat}',
     );
   }
 }

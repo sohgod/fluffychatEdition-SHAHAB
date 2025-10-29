@@ -20,7 +20,7 @@ import 'package:fluffychat/widgets/matrix.dart';
 import '../../utils/localized_exception_extension.dart';
 
 import 'package:fluffychat/utils/tor_stub.dart'
-    if (dart.library.html) 'package:tor_detector_web/tor_detector_web.dart';
+if (dart.library.html) 'package:tor_detector_web/tor_detector_web.dart';
 
 class HomeserverPicker extends StatefulWidget {
   final bool addMultiAccount;
@@ -41,6 +41,18 @@ class HomeserverPickerController extends State<HomeserverPicker> {
 
   bool isTorBrowser = false;
 
+  // ✅ 1. متغیر برای کنترل وضعیت قفل بودن ورودی.
+  // مقدار اولیه true است تا چک‌باکس به صورت پیش‌فرض فعال باشد.
+  bool isHomeserverLocked = true;
+
+  // ✅ 2. متد برای تغییر وضعیت چک‌باکس با کلیک کاربر.
+  void toggleHomeserverLock(bool? value) {
+    if (value == null) return;
+    setState(() {
+      isHomeserverLocked = value;
+    });
+  }
+
   Future<void> _checkTorBrowser() async {
     if (!kIsWeb) return;
 
@@ -48,13 +60,10 @@ class HomeserverPickerController extends State<HomeserverPicker> {
     isTorBrowser = isTor;
   }
 
-  /// Starts an analysis of the given homeserver. It uses the current domain and
-  /// makes sure that it is prefixed with https. Then it searches for the
-  /// well-known information and forwards to the login page depending on the
-  /// login type.
+  /// Starts an analysis of the given homeserver.
   Future<void> checkHomeserverAction({bool legacyPasswordLogin = false}) async {
     final homeserverInput =
-        homeserverController.text.trim().toLowerCase().replaceAll(' ', '-');
+    homeserverController.text.trim().toLowerCase().replaceAll(' ', '-');
 
     if (homeserverInput.isEmpty) {
       final client = await Matrix.of(context).getLoginClient();
@@ -98,7 +107,7 @@ class HomeserverPickerController extends State<HomeserverPicker> {
       );
     } catch (e) {
       setState(
-        () => error = (e).toLocalizedString(
+            () => error = (e).toLocalizedString(
           context,
           ExceptionContext.checkHomeserver,
         ),
@@ -118,20 +127,20 @@ class HomeserverPickerController extends State<HomeserverPicker> {
   bool get supportsSso => _supportsFlow('m.login.sso');
 
   bool isDefaultPlatform =
-      (PlatformInfos.isMobile || PlatformInfos.isWeb || PlatformInfos.isMacOS);
+  (PlatformInfos.isMobile || PlatformInfos.isWeb || PlatformInfos.isMacOS);
 
   bool get supportsPasswordLogin => _supportsFlow('m.login.password');
 
   void ssoLoginAction() async {
     final redirectUrl = kIsWeb
         ? Uri.parse(html.window.location.href)
-            .resolveUri(
-              Uri(pathSegments: ['auth.html']),
-            )
-            .toString()
+        .resolveUri(
+      Uri(pathSegments: ['auth.html']),
+    )
+        .toString()
         : isDefaultPlatform
-            ? '${AppConfig.appOpenUrlScheme.toLowerCase()}://login'
-            : 'http://localhost:3001//login';
+        ? '${AppConfig.appOpenUrlScheme.toLowerCase()}://login'
+        : 'http://localhost:3001//login';
     final client = await Matrix.of(context).getLoginClient();
     final url = client.homeserver!.replace(
       path: '/_matrix/client/v3/login/sso/redirect',

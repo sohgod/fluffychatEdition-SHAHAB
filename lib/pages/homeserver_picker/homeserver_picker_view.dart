@@ -16,9 +16,9 @@ class HomeserverPickerView extends StatelessWidget {
   final HomeserverPickerController controller;
 
   const HomeserverPickerView(
-    this.controller, {
-    super.key,
-  });
+      this.controller, {
+        super.key,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class HomeserverPickerView extends StatelessWidget {
 
     return LoginScaffold(
       enforceMobileMode:
-          Matrix.of(context).widget.clients.any((client) => client.isLogged()),
+      Matrix.of(context).widget.clients.any((client) => client.isLogged()),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -84,9 +84,7 @@ class HomeserverPickerView extends StatelessWidget {
               child: IntrinsicHeight(
                 child: Column(
                   children: [
-                    // display a prominent banner to import session for TOR browser
-                    // users. This feature is just some UX sugar as TOR users are
-                    // usually forced to logout as TOR browser is non-persistent
+                    // This is the banner for TOR users
                     AnimatedContainer(
                       height: controller.isTorBrowser ? 64 : 0,
                       duration: FluffyThemes.animationDuration,
@@ -125,7 +123,7 @@ class HomeserverPickerView extends StatelessWidget {
                       child: SelectableLinkify(
                         text: L10n.of(context).appIntroduction,
                         textScaleFactor:
-                            MediaQuery.textScalerOf(context).scale(1),
+                        MediaQuery.textScalerOf(context).scale(1),
                         textAlign: TextAlign.center,
                         linkStyle: TextStyle(
                           color: theme.colorScheme.secondary,
@@ -141,7 +139,33 @@ class HomeserverPickerView extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          // ✅ 1. ویجت چک‌باکس با عنوان درخواستی شما اضافه شد
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Checkbox(
+                                value: controller.isHomeserverLocked,
+                                onChanged: controller.toggleHomeserverLock,
+                              ),
+                              // برای اینکه متن طولانی است و ممکن است در صفحات کوچک جا نشود،
+                              // آن را در یک Flexible قرار می‌دهیم.
+                              Flexible(
+                                child: InkWell(
+                                  onTap: () => controller.toggleHomeserverLock(!controller.isHomeserverLocked),
+                                  child: const Text(
+                                    'I do not want to change login with matrix.org',
+                                    style: TextStyle(fontSize: 12), // فونت کمی کوچکتر برای جا شدن بهتر
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+
+                          // ✅ 2. فیلد ورودی برای اتصال به منطق چک‌باکس ویرایش شد
                           TextField(
+                            // ✅ 3. ویژگی readOnly به متغیر کنترلر متصل شده است
+                            readOnly: controller.isHomeserverLocked,
                             onSubmitted: (_) =>
                                 controller.checkHomeserverAction(),
                             controller: controller.homeserverController,
@@ -149,7 +173,9 @@ class HomeserverPickerView extends StatelessWidget {
                             keyboardType: TextInputType.url,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.search_outlined),
-                              filled: false,
+                              // ✅ 4. ظاهر فیلد در حالت قفل، کمی متفاوت است تا کاربر متوجه شود
+                              filled: controller.isHomeserverLocked,
+                              fillColor: controller.isHomeserverLocked ? Colors.grey.withOpacity(0.1) : null,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
                                   AppConfig.borderRadius,
@@ -174,15 +200,15 @@ class HomeserverPickerView extends StatelessWidget {
                                         text: L10n.of(context)
                                             .homeserverDescription,
                                         textScaleFactor:
-                                            MediaQuery.textScalerOf(context)
-                                                .scale(1),
+                                        MediaQuery.textScalerOf(context)
+                                            .scale(1),
                                         options: const LinkifyOptions(
                                           humanize: false,
                                         ),
                                         linkStyle: TextStyle(
                                           color: theme.colorScheme.primary,
                                           decorationColor:
-                                              theme.colorScheme.primary,
+                                          theme.colorScheme.primary,
                                         ),
                                         onOpen: (link) =>
                                             launchUrlString(link.url),
@@ -230,8 +256,8 @@ class HomeserverPickerView extends StatelessWidget {
                             onPressed: controller.isLoading
                                 ? null
                                 : () => controller.checkHomeserverAction(
-                                      legacyPasswordLogin: true,
-                                    ),
+                              legacyPasswordLogin: true,
+                            ),
                             child: Text(L10n.of(context).loginWithMatrixId),
                           ),
                         ],
