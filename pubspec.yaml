@@ -1,5 +1,5 @@
 name: fluffychat
-description: Chat with your friends.
+description: Chat with your friends
 publish_to: none
 # On version bump also increase the build number for F-Droid
 version: 2.1.1+3543
@@ -14,6 +14,7 @@ dependencies:
   async: ^2.11.0
   badges: ^3.1.2
   blurhash_dart: ^1.2.1
+  change_app_package_name: ^1.5.0
   chewie: ^1.13.0
   collection: ^1.18.0
   cross_file: ^0.3.4+2
@@ -95,6 +96,13 @@ dev_dependencies:
   license_checker: ^1.6.0
   msix: ^3.16.12
   translations_cleaner: ^0.0.5
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/favicon.png"
+
 
 import_sorter:
   ignored_files: # Optional, defaults to []

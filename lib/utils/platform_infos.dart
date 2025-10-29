@@ -7,6 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Note: The import for setting_keys is kept in case other parts of your app use it,
+// but it's no longer needed for 'applicationName' in this file.
+import 'package:fluffychat/config/setting_keys.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import '../config/app_config.dart';
 
@@ -35,8 +38,9 @@ abstract class PlatformInfos {
   /// Web could also record in theory but currently only wav which is too large
   static bool get platformCanRecord => (isMobile || isMacOS);
 
+  // THIS IS THE LINE THAT CAUSED THE ERROR and has now been FIXED
   static String get clientName =>
-      '${AppConfig.applicationName} ${isWeb ? 'web' : Platform.operatingSystem}${kReleaseMode ? '' : 'Debug'}';
+      'FluffyChat ${isWeb ? 'web' : Platform.operatingSystem}${kReleaseMode ? '' : 'Debug'}';
 
   static Future<String> getVersion() async {
     var version = kIsWeb ? 'Web' : 'Unknown';
@@ -88,7 +92,8 @@ abstract class PlatformInfos {
         height: 64,
         filterQuality: FilterQuality.medium,
       ),
-      applicationName: AppConfig.applicationName,
+      // THIS IS YOUR CUSTOMIZATION, which remains correct
+      applicationName: 'This is a modified (10/26/2025) version of FluffyChat (licensed under AGPLv3) by soheil and Shahab {Shahab-chat}',
     );
   }
 }

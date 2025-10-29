@@ -22,7 +22,7 @@ class LoginView extends StatelessWidget {
 
     return LoginScaffold(
       enforceMobileMode:
-          Matrix.of(context).widget.clients.any((client) => client.isLogged()),
+      Matrix.of(context).widget.clients.any((client) => client.isLogged()),
       appBar: AppBar(
         leading: controller.loading ? null : const Center(child: BackButton()),
         automaticallyImplyLeading: !controller.loading,
@@ -63,7 +63,7 @@ class LoginView extends StatelessWidget {
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
                     autofillHints:
-                        controller.loading ? null : [AutofillHints.username],
+                    controller.loading ? null : [AutofillHints.username],
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.account_box_outlined),
                       errorText: controller.usernameError,
@@ -80,7 +80,7 @@ class LoginView extends StatelessWidget {
                     readOnly: controller.loading,
                     autocorrect: false,
                     autofillHints:
-                        controller.loading ? null : [AutofillHints.password],
+                    controller.loading ? null : [AutofillHints.password],
                     controller: controller.passwordController,
                     textInputAction: TextInputAction.go,
                     obscureText: !controller.showPassword,

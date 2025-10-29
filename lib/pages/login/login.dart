@@ -98,7 +98,7 @@ class LoginController extends State<Login> {
     _coolDown?.cancel();
     _coolDown = Timer(
       const Duration(seconds: 1),
-      () => _checkWellKnown(userId),
+          () => _checkWellKnown(userId),
     );
   }
 
@@ -166,7 +166,7 @@ class LoginController extends State<Login> {
       okLabel: L10n.of(context).ok,
       cancelLabel: L10n.of(context).cancel,
       initialText:
-          usernameController.text.isEmail ? usernameController.text : '',
+      usernameController.text.isEmail ? usernameController.text : '',
       hintText: L10n.of(context).enterAnEmailAddress,
       keyboardType: TextInputType.emailAddress,
     );
@@ -239,7 +239,7 @@ class LoginController extends State<Login> {
 
 extension on String {
   static final RegExp _phoneRegex =
-      RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
+  RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
   static final RegExp _emailRegex = RegExp(r'(.+)@(.+)\.(.+)');
 
   bool get isEmail => _emailRegex.hasMatch(this);
